@@ -193,8 +193,12 @@ else:
         userSpaceURL = selector.xpath('//*[@class="commentthread_comment responsive_body_text   "]/div[1]/a/@href')
         for url in userSpaceURL:
             print(LogMarker.message() + "转换中: {}".format(url.replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")))
-            userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
-            userID.append(userIDData)  
+            if mode == 1:
+                userIDData = SteamID.XpathSteamID(url)  # 通过接口逐一转换
+                userID.append(userIDData)               # 增添进数组中
+            if mode == 2:
+                userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
+                userID.append(userIDData) 
         print(LogMarker.message() + "第 {} 页同步完成".format(i))
 
 
