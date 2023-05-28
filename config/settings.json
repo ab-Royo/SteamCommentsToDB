@@ -1,0 +1,7 @@
+{
+    "Proxy": {
+        "Enable": true,
+        "ProxyMode": "http",
+        "ProxyURL": "127.0.0.1:7890"
+    }
+}
