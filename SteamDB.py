@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-@File    : SteamDB.py
-@Author  : AlanStar
-@Contact : alan233@vip.qq.com
-@License : MIT
-Copyright (c) 2022-2023 AlanStar
-"""
 import os.path
 import sqlite3 as sqlite
 

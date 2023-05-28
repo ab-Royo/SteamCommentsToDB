@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-@File    : main.py
-@Author  : AlanStar
-@Contact : alan233@vip.qq.com
-@License : MIT
-Copyright (c) 2022-2023 AlanStar
-"""
 import time
 
 from lxml import html
@@ -36,7 +29,7 @@ if Enable:
 # 否则就 pass
 else:
     pass
-
+IDA = int(input(LogMarker.message() + "请输入URL格式(1_自定义个人资料URL / 2_默认数字URL): "))
 page = int(input(LogMarker.message() + "请输入需要同步的页数: "))
 
 # 如果启用了代理模式
@@ -45,7 +38,10 @@ if Enable:
     userID = []     # 定义一个 userID 列表
     for i in range(1, page + 1):
         print(LogMarker.message() + "===== 正在同步第 {} 页 =====".format(i))
-        communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
+        if IDA == 2:
+            communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
+        else:
+            communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
         req = requests.get(communityURL,headers=Headers, proxies=proxy)
         # 解析返回数据并创建选择器
         communityData = req.text
@@ -137,7 +133,10 @@ else:
     userID = []     # 定义一个 userID 列表
     for i in range(1, page + 1):
         print(LogMarker.message() + "===== 正在同步第 {} 页 =====".format(i))
-        communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
+        if IDA == 2:
+            communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
+        else:
+            communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
         req = requests.get(communityURL,headers=Headers)
         # 解析返回数据并创建选择器
         communityData = req.text

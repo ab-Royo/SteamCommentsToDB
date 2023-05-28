@@ -1,6 +1,6 @@
 {
     "Proxy": {
-        "Enable": true,
+        "Enable": false,
         "ProxyMode": "http",
         "ProxyURL": "127.0.0.1:7890"
     }
