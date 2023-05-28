@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-@File    : utils.py
-@Author  : AlanStar
-@Contact : alan233@vip.qq.com
-@License : MIT
-Copyright (c) 2022-2023 AlanStar
-"""
+
 import json
 
 import requests
@@ -82,31 +76,64 @@ class SteamTools:
 
         # 将 URL 统一转换
         url = str(URL).replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")
+        profiles = '.com/profiles/'
+        result = profiles in URL
+        if result == False:
+            if Enable:
+                __transURL = 'https://avi12.com/api/steam-id-finder?id={}'.format(url)
+                __Headers = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
+                    }
+                __Proxy = proxy = {ProxyMode: ProxyURL}   # 拼接 proxy
+                __data = requests.get(__transURL, headers=__Headers, proxies=proxy)
+                __data = __data.text
+                __userInfo = json.loads(__data)
+                __SteamID = __userInfo["steamid"]
 
-        if Enable:
-            __transURL = 'https://avi12.com/api/steam-id-finder?id={}'.format(url)
-            __Headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
-                }
-            __Proxy = proxy = {ProxyMode: ProxyURL}   # 拼接 proxy
-            __data = requests.get(__transURL, headers=__Headers, proxies=proxy)
-            __data = __data.text
-            __userInfo = json.loads(__data)
-            __SteamID = __userInfo["steamid"]
-
-        # TODO: 建议处于全局代理模式或处于国际网络(全局)环境下使用
+            # TODO: 建议处于全局代理模式或处于国际网络(全局)环境下使用
+            else:
+                __transURL = 'https://avi12.com/api/steam-id-finder?id={}'.format(url)
+                __Headers = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
+                    }
+                __data = requests.get(__transURL, headers=__Headers)
+                __data = __data.text
+                __userInfo = json.loads(__data)
+                __SteamID = __userInfo["steamid"]
+            return __SteamID
         else:
-            __transURL = 'https://avi12.com/api/steam-id-finder?id={}'.format(url)
-            __Headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
-                }
-            __data = requests.get(__transURL, headers=__Headers)
-            __data = __data.text
-            __userInfo = json.loads(__data)
-            __SteamID = __userInfo["steamid"]
-        return __SteamID
+            ID64 =str(URL).replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")
+            return ID64
 
+class SteamID:
+    @staticmethod
+    def XpathSteamID(URL):
+        ProxyMode = Settings.ProxyMode()
+        ProxyURL = Settings.ProxyURL()
 
+        __Headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
+            }
+        __Proxy = proxy = {ProxyMode: ProxyURL}   # 拼接 proxy
+        url = (str(URL))
+
+        profiles = '.com/profiles/'
+        result = profiles in url
+
+        if result == False:
+            xml = requests.get('{}'.format(url), headers=__Headers, proxies=proxy)
+
+            from lxml import etree
+            xml_xpath = etree.HTML(xml.text.encode('utf-8'))
+            type(xml_xpath)
+
+            __SteamID = re.findall('"steamid":"(.*?)"', xml.text, re.S)[0]
+            #print(__SteamID)
+
+            return __SteamID
+        else:
+            ID64 =str(URL).replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")
+            return ID64
 
 if __name__ == "__main__":
     # info
