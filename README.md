@@ -77,11 +77,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### 开发者
 
-本程序的核心功能的开发者是
-```
-Author  : AlanStar
+初版代码由AlanStar编写
 Contact : alan233@vip.qq.com
-```
+License : MIT
 
 感谢以下开发者对本项目作出的贡献：
 
