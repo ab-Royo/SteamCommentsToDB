@@ -76,9 +76,16 @@ git clone https://github.com/ab-Royo/SteamCommentsToDB.git
 如果你没有设定自定义链接，那你就是默认的**数字链接**，那么你的链接应该形如:
 > https://steamcommunity.com/profiles/**xxxx**/
 
-将 **xxxx** 的内容替换掉 `\SteamCommentsToDB\config\info.json` 中的 **userID** 字段的引号内的 **xxxx**
+将链接内的 **xxxx** 的内容替换掉 `\SteamCommentsToDB\config\info.json` 中的 **userID** 字段的引号内的 **xxxx**
 
-### 4.运行本项目
+### 4.配置代理
+如果你的网络不能直连Steam（即无法打开 https://steamcommunity.com ），那么你需要配置代理，否则请跳过这一步
+
+将 `\SteamCommentsToDB\config\settings.json` 中的 **"Enable": false** 字段中的`false`改为`true`，并在 **"ProxyURL":** 字段的引号内填入你的代理地址，如果你使用ClashForWindows，那么默认的代理地址就是：
+>127.0.0.1:7890
+
+
+### 5.运行本项目
 #### Windows10:
 在 `SteamCommentsToDB` 文件夹内，点击文件资源管理器左上角**文件**，选择**打开Windows PowerShell**，在弹出的窗口中输入以下命令
 ```
@@ -92,7 +99,8 @@ python main.py
 
 随后根据程序提示操作即可
 
-### 5.查阅数据库
+
+### 6.查阅数据库
 首先你需要一个SQLite数据库查看工具，例如 [DB Browser for SQLite (免费)](https://sqlitebrowser.org/dl/)，DataGrip等等
 
 打开你的数据库查看工具，选择 **打开数据库**，选择 `SteamCommentsToDB`文件夹的`steamDB.db`文件，即可查看你的留言板内容

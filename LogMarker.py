@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-@File    : LogMarker.py
-@Author  : AlanStar
-@Contact : alan233@vip.qq.com
-@License : MIT
-Copyright (c) 2022-2023 AlanStar
-"""
 
 # 生成 Log 消息前置标识(带颜色)
 def message():
