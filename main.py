@@ -101,7 +101,9 @@ if Enable:
                 userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
                 userID.append(userIDData)   
         print(LogMarker.message() + "第 {} 页同步完成".format(i))
-
+        if mode == 3:
+            userID = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            print(LogMarker.message() + "第 {} 页同步完成".format(i))
 
 
         '''
