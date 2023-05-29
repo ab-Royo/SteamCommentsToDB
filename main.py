@@ -7,7 +7,7 @@ import requests
 import sqlite3 as sqlite
 import LogMarker
 import SteamDB
-from utils import UserInfo, Settings, SteamTools
+from utils import UserInfo, Settings, SteamTools, SteamID
 # 调用 SteamDB 下属方法检测数据库存在, 初始化
 SteamDB.initDB()
 
@@ -30,6 +30,7 @@ if Enable:
 else:
     pass
 IDA = int(input(LogMarker.message() + "请输入URL格式(1_自定义个人资料URL / 2_默认数字URL): "))
+mode = int(input(LogMarker.message() + "请输入同步模式(1_Steam获取userID / 2_API获取userID / 3_不获取userID): "))
 page = int(input(LogMarker.message() + "请输入需要同步的页数: "))
 
 # 如果启用了代理模式
@@ -42,7 +43,7 @@ if Enable:
             communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
         else:
             communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
-        req = requests.get(communityURL,headers=Headers, proxies=proxy)
+        req = requests.get(communityURL,headers=Headers, proxies=proxy, verify=False)
         # 解析返回数据并创建选择器
         communityData = req.text
         selector = html.fromstring(communityData)
@@ -93,10 +94,16 @@ if Enable:
         userSpaceURL = selector.xpath('//*[@class="commentthread_comment responsive_body_text   "]/div[1]/a/@href')
         for url in userSpaceURL:
             print(LogMarker.message() + "转换中: {}".format(url.replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")))
-            userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
-            userID.append(userIDData)  
+            if mode == 1:
+                userIDData = SteamID.XpathSteamID(url)  # 通过接口逐一转换
+                userID.append(userIDData)               # 增添进数组中
+            if mode == 2:
+                userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
+                userID.append(userIDData)   
         print(LogMarker.message() + "第 {} 页同步完成".format(i))
-
+        if mode == 3:
+            userID = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            print(LogMarker.message() + "第 {} 页同步完成".format(i))
 
 
         '''
@@ -137,7 +144,7 @@ else:
             communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
         else:
             communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
-        req = requests.get(communityURL,headers=Headers)
+        req = requests.get(communityURL,headers=Headers, verify=False)
         # 解析返回数据并创建选择器
         communityData = req.text
         selector = html.fromstring(communityData)
@@ -188,8 +195,12 @@ else:
         userSpaceURL = selector.xpath('//*[@class="commentthread_comment responsive_body_text   "]/div[1]/a/@href')
         for url in userSpaceURL:
             print(LogMarker.message() + "转换中: {}".format(url.replace("https://steamcommunity.com/id/", "").replace("https://steamcommunity.com/profiles/", "")))
-            userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
-            userID.append(userIDData)  
+            if mode == 1:
+                userIDData = SteamID.XpathSteamID(url)  # 通过接口逐一转换
+                userID.append(userIDData)               # 增添进数组中
+            if mode == 2:
+                userIDData = SteamTools.IDTransformer(url)  # 通过接口逐一转换
+                userID.append(userIDData) 
         print(LogMarker.message() + "第 {} 页同步完成".format(i))
 
 
