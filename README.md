@@ -56,6 +56,9 @@ SteamCommentsToDB 可以获取Steam个人资料留言板的内容和留言者的
 ## 如何使用
 首先你需要一个大于等于3.8版本的Python环境，然后按照以下步骤进行操作
 
+>如何安装Python
+>https://www.liaoxuefeng.com/wiki/1016959663602400/1016959856222624
+
 ### 1.安装依赖
 在命令行中输入以下命令
 ```
@@ -81,7 +84,7 @@ git clone https://github.com/ab-Royo/SteamCommentsToDB.git
 ### 4.配置代理
 如果你的网络不能直连Steam（即无法打开 https://steamcommunity.com ），那么你需要配置代理，否则请跳过这一步
 
-将 `\SteamCommentsToDB\config\settings.json` 中的 **"Enable": false** 字段中的`false`改为`true`，并在 **"ProxyURL":** 字段的引号内填入你的代理地址，如果你使用ClashForWindows，那么默认的代理地址就是：
+将 `\SteamCommentsToDB\config\settings.json` 中的 **"Enable": false** 字段中的`false`改为`true`，并在 **"ProxyURL":** 字段的引号内填入你的代理地址，如果你使用ClashforWindows，那么默认的代理地址就是：
 >127.0.0.1:7890
 
 
@@ -97,7 +100,7 @@ python main.py
 python main.py
 ```
 
-随后根据程序提示操作即可
+随后根据程序提示操作即可，每一页含有50条留言，你可以在个人资料留言板位置点击**查看所有 xxx 条留言**，此处的页数为你需要获取的页数，例如你想获取前10页的留言，那么你就输入10，然后按回车键确认。
 
 
 ### 6.查阅数据库
@@ -117,27 +120,28 @@ msg表结构
 | sendTime   | char(20)    | 评论发送的北京时间        |
 
 
-
-
-
-
 ## 常见问题
 
-别急，在写了
-
-## 许可证
-
-SteamCommentsToDB 采用 MIT 许可证进行开源
-
-```text
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+1. 程序运行时出现以下提示
 ```
+connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn((
+```
+为了优化查询效率关闭了SSL验证。
 
+如果你想开启SSL验证，可以在 `\SteamCommentsToDB\main.py` 中将 **req = requests.get(communityURL,headers=Headers, proxies=proxy, verify=False)** 字段中的`false`改为`true`，但是这会导致查询速度变慢、稳定性变差。
+
+
+2. 程序运行时出现以下提示
+```
+Traceback (most recent call last):
+  File "G:\...\main.py", line 123, in <module>
+    userIDData = SteamID.XpathSteamID(url)  # 通过接口逐一转换
+  File "G:\...\utils.py", line 131, in XpathSteamID
+    __SteamID = re.findall('"steamid":"(.*?)"', xml.text, re.S)[0]
+IndexError: list index out of range
+```
+说明你的网络状况不佳，请更换网络环境或开启代理后重试。
 
 ### 开发者
 

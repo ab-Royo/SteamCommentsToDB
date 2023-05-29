@@ -43,7 +43,7 @@ if Enable:
             communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
         else:
             communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
-        req = requests.get(communityURL,headers=Headers, proxies=proxy)
+        req = requests.get(communityURL,headers=Headers, proxies=proxy, verify=False)
         # 解析返回数据并创建选择器
         communityData = req.text
         selector = html.fromstring(communityData)
@@ -142,7 +142,7 @@ else:
             communityURL = "https://steamcommunity.com/profiles/{}/allcomments?ctp={}".format(aimID, i)
         else:
             communityURL = "https://steamcommunity.com/id/{}/allcomments?ctp={}".format(aimID, i)
-        req = requests.get(communityURL,headers=Headers)
+        req = requests.get(communityURL,headers=Headers, verify=False)
         # 解析返回数据并创建选择器
         communityData = req.text
         selector = html.fromstring(communityData)
