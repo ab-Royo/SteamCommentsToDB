@@ -1,11 +1,3 @@
-<!--
- * @Author: abRoy abroyo@outlook.com
- * @Date: 2023-05-27 21:51:10
- * @FilePath: \SteamCommentsToDB\README.md
- * @Description: 
- * 
- * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved. 
--->
 # SteamCommentsToDB
 
 <div align="center">
@@ -19,8 +11,8 @@ _✨获取Steam个人资料留言板并存储至数据库_
 </div>
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
-    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
+  <a href="https://github.com/ab-Royo/SteamCommentsToDB/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green" alt="license">
   </a>
   <img src="https://img.shields.io/badge/python-3.8+-blue" alt="python">
   <img src="https://img.shields.io/badge/SQLite-3-ff69b4" alt="SQLite">
@@ -50,6 +42,9 @@ SteamCommentsToDB 可以获取Steam个人资料留言板的内容和留言者的
 - 只能从留言板第一页开始向后读取，直到达到指定页数，不支持仅读取指定页数
 
 ## TODO
+- [ ] 支持导出每个UserID的最近发言，支持区分指定时间内留言指定次数的用户
+- [ ] 导出的SteamDB.db可被[SteamCommentsTool](https://github.com/ab-Royo/SteamCommentsTool)直接使用
+- [ ] 检查更新
 - [ ] 同步完成后自动发送同步状态至评论区
 
 
