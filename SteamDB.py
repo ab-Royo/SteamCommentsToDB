@@ -21,6 +21,7 @@ def initDB():
         userID 用户ID
         nickName 用户名
         Content 内容
+        UnixTime 时间戳
         sendTime 发送时间
         """
         __cursor.execute('''CREATE TABLE msg
@@ -29,6 +30,7 @@ def initDB():
         nickName char(100),
         userAvatar char(200),
         Content char(1000),
+        UnixTime char(100),
         sendTime char(20));''')
         # 提交并关闭流
         __steamDB.commit()
