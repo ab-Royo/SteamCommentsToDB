@@ -161,6 +161,19 @@ IndexError: list index out of range
 ```
 说明你的网络状况不佳，请更换网络环境或开启代理后重试。
 
+3. 程序运行时出现以下提示
+```Python
+Traceback (most recent call last):
+  File "G:\...\main.py", line 131, in <module>
+    steamDB_cursor.execute(
+sqlite3.OperationalError: table main.msg has no column named UnixTime
+```
+2023/7/30日更新后在数据库新增了列UnixTime，如果你的数据库没有这一列，说明你的数据库是由以前版本的程序创建，你可以使用以下两种方法选其一解决：
+1. （推荐）使用数据库工具或是SQL语言为数据库添加列UnixTime，数据类型为char(100)
+2. 将程序文件夹已有的SteamDB.db文件移动至其他位置或改名，重新运行程序，程序会自动在此文件夹创建新的数据库文件。之后你可以自行将原数据库文件中的数据导入新数据库文件中。
+
+
+
 ### 开发者
 
 **初版代码由AlanStar编写**
