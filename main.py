@@ -129,8 +129,8 @@ if Enable:
             # 不存在
             else:
                 steamDB_cursor.execute(
-                    '''INSERT INTO "main"."msg" ("ContentID", "userID", "nickName", "userAvatar", "Content", "sendTime") VALUES (?, ?, ?, ?, ?, ?);''',
-                    (ContentID[j], userID[j], nickName[j], userAvatar[j], Content[j], time.strftime('%Y{Y}%m{m}%d{d} %H:%M:%S', time.localtime(int(sendTime[j]))).format(Y='年', m='月', d='日'))
+                    '''INSERT INTO "main"."msg" ("ContentID", "userID", "nickName", "userAvatar", "Content", "UnixTime", "sendTime") VALUES (?, ?, ?, ?, ?, ?, ?);''',
+                    (ContentID[j], userID[j], nickName[j], userAvatar[j], Content[j], sendTime[j], time.strftime('%Y{Y}%m{m}%d{d} %H:%M:%S', time.localtime(int(sendTime[j]))).format(Y='年', m='月', d='日'))
                 )
                 steamDB.commit()
                 steamDB.close()
@@ -227,8 +227,8 @@ else:
             # 不存在
             else:
                 steamDB_cursor.execute(
-                    '''INSERT INTO "main"."msg" ("ContentID", "userID", "nickName", "userAvatar", "Content", "sendTime") VALUES (?, ?, ?, ?, ?, ?);''',
-                    (ContentID[j], userID[j], nickName[j], userAvatar[j], Content[j], time.strftime('%Y{Y}%m{m}%d{d} %H:%M:%S', time.localtime(int(sendTime[j]))).format(Y='年', m='月', d='日'))
+                    '''INSERT INTO "main"."msg" ("ContentID", "userID", "nickName", "userAvatar", "Content", "UnixTime", "sendTime") VALUES (?, ?, ?, ?, ?, ?, ?);''',
+                    (ContentID[j], userID[j], nickName[j], userAvatar[j], Content[j], sendTime[j], time.strftime('%Y{Y}%m{m}%d{d} %H:%M:%S', time.localtime(int(sendTime[j]))).format(Y='年', m='月', d='日'))
                 )
                 steamDB.commit()
                 steamDB.close()
