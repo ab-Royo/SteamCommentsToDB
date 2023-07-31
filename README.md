@@ -57,6 +57,14 @@ SteamCommentsToDB 可以获取Steam个人资料留言板的内容和留言者的
 
 
 ### 1.获取本项目
+**如果你是新手**
+
+跳转至 [Releases](https://github.com/ab-Royo/SteamCommentsToDB/releases) 页面，下载最新版本的压缩包，解压到你想要的位置。此包已包含了本项目的所有文件(不含Python)，你可以直接运行本项目。
+
+---
+
+**如果你有一定代码基础**
+
 如果你有Git，在命令行中输入以下命令
 ```
 git clone https://github.com/ab-Royo/SteamCommentsToDB.git
@@ -65,6 +73,8 @@ git clone https://github.com/ab-Royo/SteamCommentsToDB.git
 如果你没有Git，那么你可以点击本页面右上角的**Code**按钮，然后选择**Download ZIP**，下载完成后解压到你想要的位置
 
 ### 2.安装依赖
+*（如果你在上一步直接在Releases中下载了项目则略过本步骤）*
+
 进入你解压出来的文件夹中
 #### Windows10:
 点击文件资源管理器左上角**文件**，选择**打开Windows PowerShell**
@@ -83,10 +93,10 @@ pip install -r requirements.txt
 ### 3.配置要获取的留言板
 首先打开你的个人资料页，然后单击鼠标右键，选择 **复制网页URL**
 如果你设定了**自定义链接**,那么你的链接应该形如：
-> https://steamcommunity.com/id/**xxxx**/
+> https://steamcommunity.com/id/xxxx/
 
 如果你没有设定自定义链接，那你就是默认的**数字链接**，那么你的链接应该形如:
-> https://steamcommunity.com/profiles/**xxxx**/
+> https://steamcommunity.com/profiles/xxxx/
 
 将链接内的 **xxxx** 的内容替换掉 `\SteamCommentsToDB\config\info.json` 中的 **userID** 字段的引号内的 **xxxx**
 
@@ -122,20 +132,29 @@ python main.py
 打开你的数据库查看工具，选择 **打开数据库**，选择 `SteamCommentsToDB`文件夹的`steamDB.db`文件，即可查看你的留言板内容
 
 #### msg表结构
-| 列名         | 数据类型        | 描述               |
-|------------|-------------|------------------|
-| ContentID  | varchar(30) | Steam每一条评论的唯一ID  |
-| userID     | char(64)    | 评论发送者的64位SteamID |
-| nickName   | char(100)   | 评论发送者的昵称         |
-| userAvatar | char(200)   | 评论发送者的头像         |
-| Content    | char(1000)  | 评论内容             |
-| UnixTime   | char(100)   | 评论发送的Unix时间      |
-| sendTime   | char(20)    | 评论发送的北京时间        |
+| 列名         | 数据类型        | 描述              |
+|------------|-------------|-----------------|
+| ContentID  | varchar(30) | Steam每一条评论的唯一ID |
+| userID     | char(64)    | 评论发送者的SteamID64 |
+| nickName   | char(100)   | 评论发送者的昵称        |
+| userAvatar | char(200)   | 评论发送者的头像        |
+| Content    | char(1000)  | 评论内容            |
+| UnixTime   | char(100)   | 评论发送的Unix时间     |
+| sendTime   | char(20)    | 评论发送的北京时间       |
+#### friends表架构
+| 列名          | 数据类型      | 描述           |
+|-------------|-----------|--------------|
+| userID      | char(64)  | 用户的SteamID64 |
+| nickname    | char(100) | 你对用户的称呼      |
+| profileName | char(100) | 用户的个人资料昵称    |
+| recently    | char(10)  | 用户是否符合时间次数条件 |
 
 #### 一些SQL常用指令
 ```sql
 SELECT * FROM msg WHERE userID = '76561198000000000' --查询某个用户的所有留言
+
 SELECT * FROM msg WHERE ContentID = '123456789' --查询某条留言
+
 SELECT * FROM msg WHERE Content LIKE '%xxx%' --查询留言内容中包含xxx的所有留言
 ```
 ## 常见问题
