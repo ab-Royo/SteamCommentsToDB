@@ -13,7 +13,7 @@ def initDB():
     else:
         # 创建数据库文件并初始化
         __steamDB = sqlite.connect("steamDB.db")
-        print(LogMarker.message() + "数据库创建成功!")
+        print(LogMarker.message() + "开始创建数据库!")
         # 创建游标 (cursor)
         __cursor = __steamDB.cursor()
         """
@@ -32,9 +32,23 @@ def initDB():
         Content char(1000),
         UnixTime char(100),
         sendTime char(20));''')
+
+        """
+        userID 用户ID pk
+        nickname 对用户的昵称
+        profileName 用户的个人资料昵称
+        recently 是否满足条件
+        """
+        __cursor.execute('''CREATE TABLE friends
+        (userID char(64) primary key,
+        nickName char(100),
+        profileName char(100),
+        recently char(10));''')
+
         # 提交并关闭流
         __steamDB.commit()
         __steamDB.close()
+        print(LogMarker.message() + "数据库初始化成功!")
 
 
 if __name__ == "__main__":
